@@ -36,8 +36,8 @@ const Home = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 10000, // 5 seconds
+    autoPlay: true,
+    autoPlaySpeed: 10000, // 10 seconds
     arrows: false,
   };
 
@@ -88,7 +88,7 @@ const Home = () => {
               src={video.videoFile}
               poster={video.thumbnail}
               controls
-              autoplay="true"
+              autoPlay="true"
               muted
               className={`w-full h-64 md:h-[480px] object-cover rounded-lg ${imageState ? "md:h-[620px]" : ""}`} 
               />
@@ -117,12 +117,12 @@ const Home = () => {
       </div>
 
       {/* Horizontal Scrolling Videos */}
-      <div className="relative overflow-hidden w-full">
+      {/* <div className="relative overflow-hidden w-full">
         <div className="flex flex-wrap justify-center items-center gap-2 overflow-x-hidden scrollbar-hide p-2" style={{ scrollSnapType: "x mandatory" }}>
           {videoList.map((video) => (
             <div key={video._id} 
             onClick={(e)=>handleClickOnVideo(video,e)}
-            className="w-[200px] h-30 sm:w-[40%] sm:h-48  mx-auto md:w-64 md:h-40 flex-shrink-0 cursor-pointer"
+            className="w-[150px] h-30 sm:w-[40%] sm:h-48  mx-auto md:w-64 md:h-40 flex-shrink-0 cursor-pointer"
             >
               <video 
               src={video.videoFile}
@@ -131,14 +131,33 @@ const Home = () => {
               muted
               className="w-full h-full object-cover rounded-lg"
               />
-             
             </div>
           ))}
         </div>
-        {/* <button className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition flex items-center">
-          View All <FaArrowRight className="ml-2" />
-        </button> */}
+      </div> */}
+      <div className="relative overflow-hidden w-full">
+  <div 
+    className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-2 overflow-x-hidden scrollbar-hide"
+    style={{ scrollSnapType: "x mandatory" }}
+  >
+    {videoList.map((video) => (
+      <div 
+        key={video._id} 
+        onClick={(e) => handleClickOnVideo(video, e)}
+        className="w-full h-40 sm:h-48 md:h-52 cursor-pointer"
+      >
+        <video 
+          src={video.videoFile}
+          poster={video.thumbnail}
+          controls
+          muted
+          className="w-full h-full object-cover rounded-lg"
+        />
       </div>
+    ))}
+  </div>
+</div>
+
 
     </div>
   );
