@@ -23,6 +23,20 @@ const PrivateVideos = () => {
     fetchVideos();
   }, []);
 
+  const handlePl = (index) => {
+    if (videoRefs.current[index]) {
+      videoRefs.current[index]
+        .play()
+        .catch((error) => console.error('Play error:', error));
+    }
+  };
+
+  const handlePause = (index) => {
+    if (videoRefs.current[index]) {
+      videoRefs.current[index].pause();
+    }
+  };
+
   const handlePlay = (index) => {
     videoRefs.current.forEach((video, idx) => {
       if (video && idx !== index) {
@@ -46,7 +60,7 @@ const PrivateVideos = () => {
   };
 
   const handleClickOnVideo = (video) => {
-    navigate("/video/main", { state: { video } });
+    navigate("/video-player", { state: { video } });
   };
 
   return (
@@ -57,28 +71,45 @@ const PrivateVideos = () => {
         </button>
       )}
       <div className="flex w-full gap-4 overflow-hidden px-10">
-        {videos.length > 0 ? (
-          videos.slice(startIndex, startIndex + 5).map((video, index) => (
-            <div key={video._id} className="w-1/5 flex flex-col bg-white shadow-md rounded-lg overflow-hidden">
-              <div className="relative w-full h-40 bg-gray-200">
-                <video
-                  ref={(el) => (videoRefs.current[index] = el)}
-                  src={video.videoFile}
-                  controls
-                  className="w-full h-full object-cover"
-                  onPlay={() => handlePlay(index)}
-                />
-              </div>
-              <div className="p-3 cursor-pointer" onClick={() => handleClickOnVideo(video)}>
-                <h3 className="text-lg font-semibold">{video.title}</h3>
-                <p className="text-sm text-gray-600">{video.description}</p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-center w-full text-gray-600">No Videos Available</p>
-        )}
+  {videos.length > 0 ? (
+    videos.slice(startIndex, startIndex + 5).map((video, index) => (
+      <div
+        key={video._id}
+        className="w-[150px] h-[250px] sm:w-1/5 sm:h-[300px] flex flex-col bg-white shadow-md rounded-lg overflow-hidden"
+      >
+        {/* Video Container */}
+        <div className="relative w-full h-[100px] sm:h-40 bg-gray-200">
+          <video
+          onClick={() => handleClickOnVideo(video)}
+            ref={(el) => (videoRefs.current[index] = el)}
+            src={video.videoFile}
+            controls
+            onMouseEnter={() => handlePl(index)}
+            onMouseLeave={() => handlePause(index)}
+            className="w-full h-full object-cover hover:cursor-pointer"
+            onPlay={() => handlePlay(index)}
+          />
+        </div>
+        
+        {/* Video Details */}
+        <div className="p-3 cursor-pointer">
+          {/* Title with Overflow Handling */}
+          <h3 className="text-md sm:text-lg font-semibold truncate">
+            {video.title}
+          </h3>
+          
+          {/* Description with Overflow Handling */}
+          <p className="text-sm sm:text-md text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">
+            {video.description}
+          </p>
+        </div>
       </div>
+    ))
+  ) : (
+    <p className="text-center w-full text-gray-600">No Videos Available</p>
+  )}
+</div>
+
       {videos && startIndex + 1 < videos.length && (
         <button className="absolute right-0 z-10 p-2 bg-gray-800 text-white rounded-full shadow-md" onClick={handleNext}>
           <FaChevronRight size={24} />

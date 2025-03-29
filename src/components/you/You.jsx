@@ -80,7 +80,8 @@ function You() {
       `}
         style={{ backgroundImage: `url(${user?.coverImage})` }}
       >
-        <div className="flex gap-4 px-12 md:pt-2">
+        <div className="mt-4 flex gap-2 md:gap-4 px-12 md:pt-2">
+
           <div>
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
@@ -90,6 +91,7 @@ function You() {
             </button>
             {showEditProfile && <EditProfile />}
           </div>
+
           <div>
             <button
               className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
@@ -99,25 +101,30 @@ function You() {
             </button>
             {showChangePassword && <ChangePassword />}
           </div>
+
         </div>
+
         <div className="md:translate-x-[-48px] md:my-0 lg:translate-x-[-100px] xl:translate-x-[-150px] md:flex md:flex-col text-white py-[12px] rounded-lg shadow-lg flex flex-col items-center w-1/2">
-          <div>
+          <div className='flex gap-4 justify-center items-center md:flex-col md:justify-start md:items-start'>
             <img
               src={user?.avatar}
               alt="User"
-              className="w-48 h-48 rounded-3xl md:w-24 md:h-24 md:rounded-full md:border-4 border-white shadow-md"
+              className="w-20 h-20 rounded-3xl md:w-24 md:h-24 md:rounded-full md:border-4 border-white shadow-md"
             />
+
             <div>
               <h2 className="text-xl font-semibold mt-2">
-                UserName: {user?.userName}
+                {user?.userName}
               </h2>
-              <p className="text-white">FullName: {user?.fullName}</p>
-              <p className="text-white">Email: {user?.email}</p>
+              <p className="text-white">{user?.fullName.toUpperCase()}</p>
+              <p className="text-white">{user?.email}</p>
             </div>
+
           </div>
+
           <div className="flex gap-6 mt-4">
-            <span className="font-semibold">Followers: 120</span>
-            <span className="font-semibold">Following: 80</span>
+            <span className="font-semibold bg-gray-500 p-1 rounded-md">Followers: 120</span>
+            <span className="font-semibold bg-gray-500 p-1 rounded-md">Following: 80</span>
           </div>
         </div>
       </div>
